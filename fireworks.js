@@ -5,7 +5,7 @@ function fireworks(wrapperID, settings) {
     // create p5 instance
     new p5((p)=>{
 
-        const GRAVITY = p.createVector(0, 9.81);
+        const GRAVITY = p.createVector(0, 0.25);
 
         class FireworksEnv{
             constructor(wrapperID, settings){
@@ -16,12 +16,13 @@ function fireworks(wrapperID, settings) {
 
                 this.rockets = [];
     
-                this.frequency = settings.frequency || 50; // mean rockets per min
+                this.frequency = settings.frequency || 10; // mean rockets per min
                 this.size = settings.size || 20; // size of fireworks
-                this.minSparkAmount = settings.minSparkAmount || 80; // min amount of sparks per rocket
-                this.maxSparkAmount = settings.maxSparkAmount || 20; // min amount of sparks per rocket
+                this.sparkSize = settings.sparkSize || 2; // size of fireworks
+                this.minSparkAmount = settings.minSparkAmount || 20; // min amount of sparks per rocket
+                this.maxSparkAmount = settings.maxSparkAmount || 100; // min amount of sparks per rocket
                 this.minLaunchAcc = settings.minLaunchAcc || 20; // min accelaration at launch
-                this.maxLaunchAcc = settings.maxLaunchAcc || 10; // max accelaration at launch
+                this.maxLaunchAcc = settings.maxLaunchAcc || 25; // max accelaration at launch
 
             }
         
@@ -37,6 +38,11 @@ function fireworks(wrapperID, settings) {
 
             launchRocket(){
                 this.rockets.push(new Rocket(p.createVector(0, - (this.minLaunchAcc + p.random(this.maxLaunchAcc - this.minLaunchAcc)))));
+
+                if(this.rockets.length >= 10)
+                    this.rockets.splice(-1,1);
+
+                console.log(this.rockets.length)
             }
                 
         }
@@ -60,6 +66,7 @@ function fireworks(wrapperID, settings) {
             }
 
             draw(){
+                p.strokeWeight(env.sparkSize);
                 p.point(this.pos.x, this.pos.y);
             }
 
@@ -70,35 +77,46 @@ function fireworks(wrapperID, settings) {
                 this.pos = p.createVector(p.random(env.canvas.width), env.canvas.height + 100) ; // below ground
                 this.vel = acc || p.createVector(0, 0);
                 this.sparks = [];
+                this.ftl = null; // frames to live
             }
 
             explode(){
                 let sparkAmount = env.minSparkAmount + p.random(env.maxSparkAmount - env.minSparkAmount);
+                this.ftl = 5; // 100 frames to live
                 for(let i = 0; i < sparkAmount; i++){
                     this.sparks.push(new Spark(p.createVector(this.pos.x + p.random(100), this.pos.y + p.random(100)), this.vel));
                 }
             }
 
             update(){
+                this.vel.add(GRAVITY);
                 this.pos.add(this.vel);
 
                 // if 30% of the screen have been passed -> explode with a chance of 40%
-                if(this.pos.x < env.canvas.height / 2 && p.random(1) > 0.4){
+                if(this.vel.y >= 0){
                     this.explode();
                 }
             }
         
             draw(){
 
-                console.log(this.pos)
+                p.strokeWeight(env.size);
 
                 p.point(this.pos.x, this.pos.y);
 
                 // draw sparks
-                for(let spark of this.sparks){
-                    spark.update();
-                    spark.draw();
+                if(this.ftl >= 0){
+                    this.ftl = 0;
+                    console.log(this.ftl)
+                    for(let spark of this.sparks){
+                        spark.update();
+                        spark.draw();
+                    }
+                }else{
+                    // destroy sparks
+                    this.sparks = [];
                 }
+
             }
         
         }
@@ -115,8 +133,6 @@ function fireworks(wrapperID, settings) {
 
             // connect to canvas
             env.setCanvas(canvas);
-
-            p.strokeWeight(env.size);
         }
 
         // run continous (frameRate)
