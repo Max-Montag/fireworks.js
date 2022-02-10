@@ -5,7 +5,7 @@ function fireworks(wrapperID, settings) {
     // create p5 instance
     new p5((p)=>{
 
-        const GRAVITY = p.createVector(0, 0.25);
+        const GRAVITY = p.createVector(0, 0.3);
         const SPARK_GRAVITY = p.createVector(0, 0.05);
 
         class FireworksEnv{
@@ -17,15 +17,15 @@ function fireworks(wrapperID, settings) {
 
                 this.rockets = [];
     
-                this.frequency = settings.frequency || 90; // mean rockets per min
-                this.size = settings.size || 20; // size of fireworks
-                this.ftl = settings.framesToLive || 500; // frames to live
-                this.sparkSize = settings.sparkSize || 2; // size of fireworks
-                this.sparkSpeed = settings.sparkSpeed || 5; // size of fireworks
+                this.frequency = settings.frequency || 0.05; // chance for a new rocket to be born in this frame
+                this.maxRockets = settings.maxRockets || 15; // max amoutn of rocketsmaxRockets 
+                this.ftl = settings.framesToLive || 100; // frames to live
+                this.sparkSize = settings.sparkSize || 1.5; // size of sparks
+                this.sparkSpeed = settings.sparkSpeed || 1; // speed of sparks
                 this.minSparkAmount = settings.minSparkAmount || 20; // min amount of sparks per rocket
-                this.maxSparkAmount = settings.maxSparkAmount || 200; // min amount of sparks per rocket
-                this.minLaunchAcc = settings.minLaunchAcc || 15; // min accelaration at launch
-                this.maxLaunchAcc = settings.maxLaunchAcc || 20; // max accelaration at launch
+                this.maxSparkAmount = settings.maxSparkAmount || 100; // max amount of sparks per rocket
+                this.minLaunchAcc = settings.minLaunchAcc || 16; // min accelaration at launch
+                this.maxLaunchAcc = settings.maxLaunchAcc || 24; // max accelaration at launch
 
             }
         
@@ -43,7 +43,7 @@ function fireworks(wrapperID, settings) {
                 this.rockets.push(new Rocket(p.createVector(p.random(2) - 1, - ((this.minLaunchAcc + p.random(this.maxLaunchAcc - this.minLaunchAcc) * this.canvas.height / 700)))));
 
                 // pop one rocket, if rockets > 10
-                if(this.rockets.length >= 20)
+                if(this.rockets.length >= this.maxRockets)
                     this.rockets.splice(0,1);
             }
                 
@@ -77,9 +77,9 @@ function fireworks(wrapperID, settings) {
             constructor(acc = null){
                 this.pos = p.createVector(p.random(env.canvas.width), env.canvas.height + 100) ; // below ground
                 this.vel = acc || p.createVector(0, 0);
-                this.color = p.color(p.random(100), p.random(255), p.random(255), 1);
+                this.color = p.color(p.random(255), p.random(1), 1, 1);
                 this.sparks = [];
-                this.ftl = null; // frames to live
+                this.ftl = null; // frames to live (after explosion)
             }
 
             explode(){
@@ -109,7 +109,7 @@ function fireworks(wrapperID, settings) {
                     // draw sparks
                     if(this.ftl >= 0){
 
-                        this.color.setAlpha(1 / (env.ftl - this.ftl))
+                        this.color.setAlpha(1 - ( 1 / (env.ftl - this.ftl)));
 
                         p.stroke(this.color);
                         p.strokeWeight(env.sparkSize);
@@ -147,14 +147,14 @@ function fireworks(wrapperID, settings) {
             // connect to canvas
             env.setCanvas(canvas);
 
-            p.colorMode(p.RGB, 255, 255, 255, 1);
+            p.colorMode(p.HSB, 255, 1, 1, 1);
         }
 
         // run continous (frameRate)
         p.draw = function () {
 
             // add a new rocket every once in a while
-            let add = (p.random(100 - env.frequency) < 1) ? true : false;
+            let add = (p.random(1) < env.frequency) ? true : false;
 
             if(add == true)
                 env.launchRocket();

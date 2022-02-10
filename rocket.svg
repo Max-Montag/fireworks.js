@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="5"
-   height="33"
-   viewBox="0 0 1.3229168 8.7312545"
+   width="3"
+   height="25"
+   viewBox="0 0 0.79375005 6.6145865"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
@@ -28,7 +28,7 @@
      height="50px"
      inkscape:zoom="22.627417"
      inkscape:cx="0.066291261"
-     inkscape:cy="11.114835"
+     inkscape:cy="16.860077"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="-8"
@@ -42,12 +42,12 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#000000;stroke-width:0.029859"
+       style="fill:#000000;stroke-width:0.0201592"
        id="rect846"
-       width="0.78087431"
-       height="4.6315069"
-       x="0.31234941"
-       y="0.99103945" />
+       width="0.46516219"
+       height="3.5439994"
+       x="0.19541898"
+       y="0.71969038" />
     <path
        sodipodi:type="star"
        style="fill:#800000;stroke-width:1.00157"
@@ -63,15 +63,15 @@
        inkscape:rounded="0"
        inkscape:randomized="0"
        d="M 5.7837217,4.2185392 0.86796958,4.2244152 3.3207568,-0.035689 Z"
-       transform="matrix(0.15885145,0,0,0.17799696,0.17447118,0.24015238)"
-       inkscape:transform-center-x="-0.00026944674"
-       inkscape:transform-center-y="-0.1260323" />
+       transform="matrix(0.09462687,0,0,0.13620213,0.11328574,0.14511643)"
+       inkscape:transform-center-x="-0.00016051326"
+       inkscape:transform-center-y="-0.096439109" />
     <rect
-       style="fill:#000000;stroke-width:0.161895"
+       style="fill:#000000;stroke-width:0.109303"
        id="rect1426"
-       width="0.12394831"
-       height="2.8778291"
-       x="0.57264102"
-       y="5.6225457" />
+       width="0.073835276"
+       height="2.2020962"
+       x="0.35047314"
+       y="4.263689" />
   </g>
 </svg>
