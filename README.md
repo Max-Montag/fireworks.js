@@ -29,7 +29,8 @@
 
 ```js
 fireworksEnv = fireworks(
-    'fireworks-wrapper', 
+    wrapperID = 'fireworks-wrapper', 
+    imgLoc = 'rocket.png',
     settings = {
         'frequency': 0.05,
         'maxRockets': 15,
@@ -44,7 +45,11 @@ fireworksEnv = fireworks(
 );
 ```
 
-> fireworksEnv contains all relevant parameters that can be adjusted at runtime
+> fireworksEnv contains all relevant parameters that can be adjusted at runtime, e. g.
+
+```js
+fireworksEnv.frequency = 0.1;
+```
 
 ## Demo
 
