@@ -11,6 +11,8 @@
   <script src="https://cdn.jsdelivr.net/gh/max-montag/fireworks.js/fireworks.min.js"></script>
 ```
 
+> include rocket.png in your img folder
+
 > include css for overlay-like fireworks (click through)
 ```css
 #fireworks-wrapper{
@@ -30,7 +32,7 @@
 ```js
 fireworksEnv = fireworks(
     wrapperID = 'fireworks-wrapper', 
-    imgLoc = 'rocket.png',
+    imgLoc = 'rocket.png', // match img folder!
     settings = {
         'frequency': 0.05,
         'maxRockets': 15,
