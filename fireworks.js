@@ -1,4 +1,4 @@
-function fireworks(wrapperID, settings) {
+function fireworks(wrapperID, imgLoc, settings) {
 
     var env;
 
@@ -9,8 +9,9 @@ function fireworks(wrapperID, settings) {
         const SPARK_GRAVITY = p.createVector(0, 0.05);
 
         class FireworksEnv{
-            constructor(wrapperID, settings){
+            constructor(wrapperID, imgLoc, settings){
                 this.wrapperID = wrapperID;
+                this.imgLoc = imgLoc;
                 this.frameRate = settings.frameRate || 60;
                 this.backgroundColor = settings.backgroundColor || 'rgba(0%,0%,0%, 0)'; // 0 <= backgroundColor < 256
                 this.canvas = null;
@@ -50,7 +51,7 @@ function fireworks(wrapperID, settings) {
         }
 
         // create environment
-        env = new FireworksEnv(wrapperID, settings);
+        env = new FireworksEnv(wrapperID, imgLoc, settings);
 
         class Spark{
             constructor(pos, vel){
@@ -109,7 +110,7 @@ function fireworks(wrapperID, settings) {
                     // draw sparks
                     if(this.ftl >= 0){
 
-                        this.color.setAlpha(1 - ( 1 / (env.ftl - this.ftl)));
+                        //  this.color.setAlpha(1 - ( 1 / (this.ftl - env.ftl)));
 
                         p.stroke(this.color);
                         p.strokeWeight(env.sparkSize);
@@ -131,7 +132,7 @@ function fireworks(wrapperID, settings) {
         }
 
         p.preload = function() {
-            rocketImg = p.loadImage('rocket.png');
+            rocketImg = p.loadImage(env.imgLoc);
         }
     
 

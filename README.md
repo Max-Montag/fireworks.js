@@ -5,10 +5,10 @@
 > include in your html file
 
 ```html
-  <div id="rain-wrapper"></div>
+  <div id="fireworks-wrapper"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/max-montag/rain.js/fireworks.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/max-montag/fireworks.js/fireworks.min.js"></script>
 ```
 
 > include css for overlay-like fireworks (click through)
@@ -31,7 +31,6 @@
 fireworksEnv = fireworks(
     'fireworks-wrapper', 
     settings = {
-        'backgroundColor': null,
         'frequency': 0.05,
         'maxRockets': 15,
         'framesToLive': 100,
