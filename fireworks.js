@@ -79,8 +79,6 @@ function fireworks(wrapperID, imgLoc, settings) {
                 if (fonts[env.font][letter]) {
                     let rocket = new Rocket(p.createVector(this.canvas.width / 2, this.canvas.height + 50), acc, fonts[env.font][letter]);
                     this.rockets.push(rocket);
-                } else {
-                    throw 'letter "' + letter + '" is not contained in font';
                 }
             }
 

@@ -13,7 +13,7 @@ fireworksEnv = fireworks(
     }
 );
 
-const modes = ['random', 'manual', 'auto', 'mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'hearts', 'smileys', 'cash', 'symbols']
+const modes = ['auto', 'random', 'manual', 'mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'hearts', 'smileys', 'cash', 'symbols']
 
 var s = document.getElementById('mode-select');
 for (let mode of modes) {
