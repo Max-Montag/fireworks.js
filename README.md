@@ -34,18 +34,17 @@ fireworksEnv = fireworks(
     wrapperID = 'fireworks-wrapper', 
     imgLoc = '/yourImagefolder/rocket.png', // match img folder!
     settings = {
-        'frequency': 0.05, // disabled in manual-mode
-        'maxRockets': 15, // disabled in manual-mode
+        'frequency': 0.05,
+        'maxRockets': 15,
         'framesToLive': 100, // after explosion
         'sparkSize': 1.5, 
         'sparkSpeed': 1, 
-        'minSparkAmount': 20, // disabled in manual-mode
-        'maxSparkAmount': 100, // disabled in manual-mode
-        'minLaunchAcc': 16, // disabled in manual-mode
-        'maxLaunchAcc': 24, // disabled in manual-mode
-        'mode': 'manual', // can be 'manual' (for letters) or 'auto', default ist 'auto'
-        'wordDuration': 4, // time between words
-        'launchRandomRockets': true; // wheter to launch random rockets while showing messages
+        'minSparkAmount': 20,
+        'maxSparkAmount': 100,
+        'minLaunchAcc': 16,
+        'maxLaunchAcc': 24,
+        'mode': 'auto', // can be 'manual' (for letters) or 'auto', default ist 'auto'
+        'wordDuration': 4, // time between words in seconds
     }
 );
 ```
@@ -53,7 +52,7 @@ fireworksEnv = fireworks(
 > fireworksEnv contains all relevant parameters that can be adjusted at runtime, e. g.
 
 ```js
-fireworksEnv.frequency = 0.1;
+fireworksEnv.mode = 'auto'; // do not launch random rockets
 ```
 
 ## Demo
