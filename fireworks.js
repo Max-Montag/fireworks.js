@@ -268,7 +268,6 @@ function fireworks(wrapperID, imgLoc, settings) {
                     payload = shapes[env.mode][p.round(p.random(shapes[env.mode].length - 1))];
                 }else if(env.mode == 'random') {
                     let shapeType = Object.keys(shapes)[p.round(p.random(Object.keys(shapes).length - 1))];
-                    console.log(shapeType)
                     payload = shapes[shapeType][p.round(p.random(shapes[shapeType].length - 1))];
                 }
 
