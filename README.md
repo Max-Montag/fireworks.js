@@ -34,30 +34,27 @@ fireworksEnv = fireworks(
     wrapperID = 'fireworks-wrapper', 
     imgLoc = '/yourImagefolder/rocket.png', // match img folder!
     settings = {
-        'frequency': 0.05,
-        'maxRockets': 15,
-        'framesToLive': 100, // after explosion
-        'sparkSize': 1.5, 
-        'sparkSpeed': 1, 
+        'framesToLive': 90, // after explosion
+        'sparkSize': 1.5,
+        'sparkSpeed': 1.5,
         'minSparkAmount': 20,
         'maxSparkAmount': 100,
-        'minLaunchAcc': 16,
-        'maxLaunchAcc': 24,
-        'wordDuration': 4, // time between words in seconds
+        'wordDuration': 1, // in seconds
 
         /* 
             mode can be:
+                - 'random'
                 - 'manual'
                 - 'auto'
-                - 'random'
                 - 'hearts'
                 - 'smileys'
-                - 'cash
+                - 'cash'
+                - 'symbols'
                 - 'mixed *' -> * can be any shape like 'hearts', 'smileys' or 'cash'
                 - default ist 'auto'
         */
 
-        'mode' = 'mixed hearts';
+        'mode' = 'random';
     }
 );
 ```

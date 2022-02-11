@@ -2,15 +2,14 @@ fireworksEnv = fireworks(
     wrapperID = 'fireworks-wrapper', 
     imgLoc = 'rocket.png',
     settings = {
-        'frequency': 0.05,
-        'framesToLive': 100,
+        'framesToLive': 90,
         'sparkSize': 1.5,
-        'sparkSpeed': 1,
+        'sparkSpeed': 1.5,
         'minSparkAmount': 20,
         'maxSparkAmount': 100,
-        'minLaunchAcc': 16,
-        'maxLaunchAcc': 24,
-        'mode': 'mixed hearts',
+        'mode': 'random',
+        'wordDuration': 1,
+
     }
 );
 
@@ -24,7 +23,7 @@ function changeMode(){
     fireworksEnv.mode = mode;
 }
 
-const modes = ['mixed hearts', 'mixed smileys', 'mixed cash', 'manual', 'auto', 'random', 'hearts', 'smileys', 'cash']
+const modes = ['random', 'manual', 'auto', 'mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'hearts', 'smileys', 'cash', 'symbols']
 
 var s = document.getElementById('mode-select');
 for (let mode of modes) {
@@ -32,5 +31,5 @@ for (let mode of modes) {
 }
 
 setTimeout(()=>{
-    fireworksEnv.writeMessage("Hey there ♥");
+    fireworksEnv.writeMessage("Hey There ♥");
 }, 500);
