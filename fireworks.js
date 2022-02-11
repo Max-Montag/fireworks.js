@@ -96,9 +96,11 @@ function fireworks(wrapperID, imgLoc, settings) {
                                 this.launchRandomRocket();
                         }
 
+                        let multiLetter = (word.length == 1) ? 0 : 1;
+
                         // calc accelearation for this rocket
                         let acc = p.createVector(
-                            ((i / word.length) - 0.4) * (5 + this.canvas.width / 300),
+                            ((i / word.length) - 0.4) * (5 + this.canvas.width / 300) * multiLetter,
                             -10 - ((this.canvas.height - 100 + p.random(200)) / 100)
                         );
 
