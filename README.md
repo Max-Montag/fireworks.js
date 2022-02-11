@@ -43,8 +43,21 @@ fireworksEnv = fireworks(
         'maxSparkAmount': 100,
         'minLaunchAcc': 16,
         'maxLaunchAcc': 24,
-        'mode': 'auto', // can be 'manual' or 'auto', default ist 'auto'
         'wordDuration': 4, // time between words in seconds
+
+        /* 
+            mode can be:
+                - 'manual'
+                - 'auto'
+                - 'random'
+                - 'hearts'
+                - 'smileys'
+                - 'cash
+                - 'mixed *' -> * can be any shape like 'hearts', 'smileys' or 'cash'
+                - default ist 'auto'
+        */
+
+        'mode' = 'mixed hearts';
     }
 );
 ```
@@ -59,7 +72,7 @@ fireworksEnv.mode = 'manual'; // do not launch random rockets
 
 https://max-montag.github.io/fireworks.js/
 
-## Create your own font here
+## Create your own fonts and shapes here
 
 https://editor.p5js.org/Max-Montag/sketches/lZCj6UUaV
 

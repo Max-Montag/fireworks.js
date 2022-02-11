@@ -27,6 +27,7 @@ body{
     top: 85%;
     left: 2%;
     min-height: 5%;
+    min-width: 10%;
     height: 5%;
     height: auto;
     width: 10%;
@@ -39,4 +40,8 @@ body{
 
 #launch-btn{
     top: 92%;
+}
+
+#mode-select{
+    top: 78%;
 }

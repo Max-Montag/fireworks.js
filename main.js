@@ -10,7 +10,7 @@ fireworksEnv = fireworks(
         'maxSparkAmount': 100,
         'minLaunchAcc': 16,
         'maxLaunchAcc': 24,
-        'mode': 'auto' 
+        'mode': 'mixed hearts',
     }
 );
 
@@ -18,7 +18,19 @@ function launch(){
     fireworksEnv.writeMessage(document.getElementById('launch-text').value);
 }
 
+function changeMode(){
+    var select = document.getElementById('mode-select');
+    var mode = select.options[select.selectedIndex].text;
+    fireworksEnv.mode = mode;
+}
+
+const modes = ['mixed hearts', 'mixed smileys', 'mixed cash', 'manual', 'auto', 'random', 'hearts', 'smileys', 'cash']
+
+var s = document.getElementById('mode-select');
+for (let mode of modes) {
+    s.options[s.options.length]= new Option(mode, '1');
+}
 
 setTimeout(()=>{
-    fireworksEnv.writeMessage("Hey there");
+    fireworksEnv.writeMessage("Hey there ♥");
 }, 500);
