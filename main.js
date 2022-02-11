@@ -13,8 +13,11 @@ fireworksEnv = fireworks(
     }
 );
 
-function launch(){
-    fireworksEnv.writeMessage(document.getElementById('launch-text').value);
+const modes = ['random', 'manual', 'auto', 'mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'hearts', 'smileys', 'cash', 'symbols']
+
+var s = document.getElementById('mode-select');
+for (let mode of modes) {
+    s.options[s.options.length]= new Option(mode, '1');
 }
 
 function changeMode(){
@@ -23,11 +26,8 @@ function changeMode(){
     fireworksEnv.mode = mode;
 }
 
-const modes = ['random', 'manual', 'auto', 'mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'hearts', 'smileys', 'cash', 'symbols']
-
-var s = document.getElementById('mode-select');
-for (let mode of modes) {
-    s.options[s.options.length]= new Option(mode, '1');
+function launch(){
+    fireworksEnv.writeMessage(document.getElementById('launch-text').value);
 }
 
 setTimeout(()=>{
