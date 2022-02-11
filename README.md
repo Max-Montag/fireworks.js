@@ -34,15 +34,16 @@ fireworksEnv = fireworks(
     wrapperID = 'fireworks-wrapper', 
     imgLoc = 'rocket.png', // match img folder!
     settings = {
-        'frequency': 0.05,
-        'maxRockets': 15,
-        'framesToLive': 100,
-        'sparkSize': 1.5,
-        'sparkSpeed': 1,
-        'minSparkAmount': 20,
-        'maxSparkAmount': 100,
-        'minLaunchAcc': 16,
-        'maxLaunchAcc': 24,
+        'frequency': 0.05, // disabled in auto-mode
+        'maxRockets': 15, // disabled in auto-mode
+        'framesToLive': 100, 
+        'sparkSize': 1.5, 
+        'sparkSpeed': 1, 
+        'minSparkAmount': 20, // disabled in auto-mode
+        'maxSparkAmount': 100, // disabled in auto-mode
+        'minLaunchAcc': 16, // disabled in auto-mode
+        'maxLaunchAcc': 24, // disabled in auto-mode
+        'mode': 'manual' // can be 'manual' (for letters) or 'auto', default ist 'auto'
     }
 );
 ```
@@ -56,6 +57,10 @@ fireworksEnv.frequency = 0.1;
 ## Demo
 
 https://max-montag.github.io/fireworks.js/
+
+## Create your own font here
+
+https://editor.p5js.org/Max-Montag/sketches/lZCj6UUaV
 
 
 ## License

@@ -11,7 +11,7 @@ fireworksEnv = fireworks(
         'maxSparkAmount': 100,
         'minLaunchAcc': 16,
         'maxLaunchAcc': 24,
-        'mode': 'manual'
+        'mode': 'manual' 
     }
 );
 
@@ -26,6 +26,11 @@ function testBtn2() {
 }
 
 setTimeout(()=>{
+    fireworksEnv.writeMessage("ich liebe dich! ♥");
+}, 200);
+
+/*
+setTimeout(()=>{
     let counter = 0;
     for (const [letter, stuff] of Object.entries(fonts["max-sans"])) {
         counter += 500;
@@ -36,3 +41,4 @@ setTimeout(()=>{
 
 
 }, 200);
+*/

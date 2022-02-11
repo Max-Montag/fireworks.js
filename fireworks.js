@@ -29,6 +29,7 @@ function fireworks(wrapperID, imgLoc, settings) {
                 this.maxLaunchAcc = settings.maxLaunchAcc || 24; // max accelaration at launch
                 this.mode = settings.mode || 'auto'; // can be 'manual' (for letters) or 'auto', default ist 'auto
                 this.font = settings.font || 'max-sans'; // can be 'max-sans', '♥' is supported
+                this.wordDuration = settings.wordDuration || 5; // time between words
 
             }
         
@@ -58,6 +59,30 @@ function fireworks(wrapperID, imgLoc, settings) {
                     this.rockets.push(new Rocket(p.createVector(env.canvas.width / 2, env.canvas.height + 50), p.createVector(0, -20), fonts[env.font][letter]));
                 }else{
                     throw 'letter "' + letter + '" is not contained in font';
+                }
+            }
+
+            writeWord(word){
+                for (let i = 0; i < word.length; i++) {
+                    setTimeout(()=>{
+                        this.launchLetterRocket(word[i].toUpperCase());
+                    }, p.random(500) * i);
+                }
+            }
+
+            writeMessage(message){
+                let words = message.split(/\s+/);
+                
+                for(let i = 0; i < words.length; i++){
+                    setTimeout(()=>{
+                        
+                        // clear list of rockets
+                        this.rockets = [];
+
+                        // show word
+                        this.writeWord(words[i]);
+
+                    }, i * 1000 * this.wordDuration);
                 }
             }
                 
