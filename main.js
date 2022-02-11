@@ -11,6 +11,7 @@ fireworksEnv = fireworks(
         'maxSparkAmount': 100,
         'minLaunchAcc': 16,
         'maxLaunchAcc': 24,
+        'mode': 'manual'
     }
 );
 
@@ -23,3 +24,15 @@ function testBtn2() {
     if(fireworksEnv.sparkSpeed > 0)
         fireworksEnv.sparkSpeed -= 0.05;
 }
+
+setTimeout(()=>{
+    let counter = 0;
+    for (const [letter, stuff] of Object.entries(fonts["max-sans"])) {
+        counter += 500;
+        setTimeout(()=>{
+            fireworksEnv.launchLetterRocket(letter);
+        }, counter);
+    }
+
+
+}, 200);
