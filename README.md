@@ -43,7 +43,7 @@ fireworksEnv = fireworks(
         'maxSparkAmount': 100,
         'minLaunchAcc': 16,
         'maxLaunchAcc': 24,
-        'mode': 'auto', // can be 'manual' (for letters) or 'auto', default ist 'auto'
+        'mode': 'auto', // can be 'manual' or 'auto', default ist 'auto'
         'wordDuration': 4, // time between words in seconds
     }
 );
@@ -52,7 +52,7 @@ fireworksEnv = fireworks(
 > fireworksEnv contains all relevant parameters that can be adjusted at runtime, e. g.
 
 ```js
-fireworksEnv.mode = 'auto'; // do not launch random rockets
+fireworksEnv.mode = 'manual'; // do not launch random rockets
 ```
 
 ## Demo
