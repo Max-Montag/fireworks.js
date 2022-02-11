@@ -233,7 +233,7 @@ function fireworks(wrapperID, imgLoc, settings) {
         }
 
         p.preload = function () {
-            rocketImg = p.loadImage();
+            rocketImg = p.loadImage(env.imgLoc);
         }
 
 
