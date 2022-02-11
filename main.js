@@ -26,19 +26,5 @@ function testBtn2() {
 }
 
 setTimeout(()=>{
-    fireworksEnv.writeMessage("ich liebe dich! ♥");
+    fireworksEnv.writeMessage("Ich liebe dich ♥♥♥♥♥♥ ♥♥♥♥♥ ♥♥♥ ♥♥♥♥♥ ♥ ♥ ♥♥♥♥ ♥ ♥♥♥♥ ♥♥♥♥♥♥♥♥♥ ♥");
 }, 200);
-
-/*
-setTimeout(()=>{
-    let counter = 0;
-    for (const [letter, stuff] of Object.entries(fonts["max-sans"])) {
-        counter += 500;
-        setTimeout(()=>{
-            fireworksEnv.launchLetterRocket(letter);
-        }, counter);
-    }
-
-
-}, 200);
-*/

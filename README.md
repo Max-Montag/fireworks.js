@@ -32,18 +32,20 @@
 ```js
 fireworksEnv = fireworks(
     wrapperID = 'fireworks-wrapper', 
-    imgLoc = 'rocket.png', // match img folder!
+    imgLoc = '/yourImagefolder/rocket.png', // match img folder!
     settings = {
-        'frequency': 0.05, // disabled in auto-mode
-        'maxRockets': 15, // disabled in auto-mode
-        'framesToLive': 100, 
+        'frequency': 0.05, // disabled in manual-mode
+        'maxRockets': 15, // disabled in manual-mode
+        'framesToLive': 100, // after explosion
         'sparkSize': 1.5, 
         'sparkSpeed': 1, 
-        'minSparkAmount': 20, // disabled in auto-mode
-        'maxSparkAmount': 100, // disabled in auto-mode
-        'minLaunchAcc': 16, // disabled in auto-mode
-        'maxLaunchAcc': 24, // disabled in auto-mode
-        'mode': 'manual' // can be 'manual' (for letters) or 'auto', default ist 'auto'
+        'minSparkAmount': 20, // disabled in manual-mode
+        'maxSparkAmount': 100, // disabled in manual-mode
+        'minLaunchAcc': 16, // disabled in manual-mode
+        'maxLaunchAcc': 24, // disabled in manual-mode
+        'mode': 'manual', // can be 'manual' (for letters) or 'auto', default ist 'auto'
+        'wordDuration': 4, // time between words
+        'launchRandomRockets': true; // wheter to launch random rockets while showing messages
     }
 );
 ```
