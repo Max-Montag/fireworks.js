@@ -177,9 +177,10 @@ function fireworks(wrapperID, imgLoc, settings) {
                             )
                         );
                     }
-                } else { // draw random
+                } else {
+ 
+                    // draw random
                     let sparkAmount = env.minSparkAmount + p.random(env.maxSparkAmount - env.minSparkAmount);
-
 
                     for (let i = 0; i < sparkAmount; i++) {
                         this.sparks.push(
@@ -287,7 +288,7 @@ function fireworks(wrapperID, imgLoc, settings) {
 
             for (let rocket of env.rockets) {
                 rocket.update();
-                rocket.draw(rocketImg);
+                rocket.draw();
             }
 
         }
