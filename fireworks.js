@@ -203,7 +203,7 @@ function fireworks(wrapperID, imgLoc, settings) {
                 }
             }
 
-            draw(rocket) {
+            draw() {
 
                 if (this.sparks.length > 0) {
 
@@ -225,14 +225,14 @@ function fireworks(wrapperID, imgLoc, settings) {
                     }
                 } else {
                     p.rotate(p.PI / 180 * this.vel.x * 4);
-                    p.image(rocket, this.pos.x, this.pos.y);
+                    p.image(env.imgLoc, this.pos.x, this.pos.y);
                     p.rotate(-p.PI / 180 * this.vel.x * 4);
                 }
             }
         }
 
         p.preload = function () {
-            rocketImg = p.loadImage(env.imgLoc);
+            rocketImg = p.loadImage();
         }
 
 
