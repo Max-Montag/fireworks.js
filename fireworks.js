@@ -19,7 +19,6 @@ function fireworks(wrapperID, imgLoc, settings) {
                 this.canvas = null;
 
                 this.rockets = [];
-                this.showingLetters = [];
 
                 this.frequency = settings.frequency || 0.05; // chance for a new rocket to be born in this frame
                 this.maxRockets = settings.maxRockets || 15; // max amoutn of rocketsmaxRockets 
