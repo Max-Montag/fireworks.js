@@ -51,7 +51,7 @@ fireworksEnv = fireworks(
                 - 'cash'
                 - 'symbols'
                 - 'mixed *' -> * can be any shape like 'hearts', 'smileys' or 'cash'
-                - default ist 'auto'
+                - default is 'auto'
         */
 
         'mode' = 'random';
