@@ -7,7 +7,7 @@ fireworksEnv = fireworks(
         'sparkSpeed': 1.5,
         'minSparkAmount': 20,
         'maxSparkAmount': 100,
-        'mode': 'random',
+        'mode': 'auto',
         'wordDuration': 1,
 
     }

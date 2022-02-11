@@ -96,7 +96,7 @@ function fireworks(wrapperID, imgLoc, settings) {
                                 this.launchRandomRocket();
                         }
 
-                        let multiLetter = (word.length == 1) ? 0 : 1;
+                        let multiLetter = (word.length == 1) ? 0 : 1; // does this word contain more than one letter?
 
                         // calc accelearation for this rocket
                         let acc = p.createVector(
