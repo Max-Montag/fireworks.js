@@ -177,10 +177,9 @@ function fireworks(wrapperID, imgLoc, settings) {
                             )
                         );
                     }
-                } else {
- 
-                    // draw random
+                } else { // draw random
                     let sparkAmount = env.minSparkAmount + p.random(env.maxSparkAmount - env.minSparkAmount);
+
 
                     for (let i = 0; i < sparkAmount; i++) {
                         this.sparks.push(
@@ -204,7 +203,7 @@ function fireworks(wrapperID, imgLoc, settings) {
                 }
             }
 
-            draw() {
+            draw(rocket) {
 
                 if (this.sparks.length > 0) {
 
@@ -226,7 +225,7 @@ function fireworks(wrapperID, imgLoc, settings) {
                     }
                 } else {
                     p.rotate(p.PI / 180 * this.vel.x * 4);
-                    p.image(env.imgLoc, this.pos.x, this.pos.y);
+                    p.image(rocket, this.pos.x, this.pos.y);
                     p.rotate(-p.PI / 180 * this.vel.x * 4);
                 }
             }
@@ -288,7 +287,7 @@ function fireworks(wrapperID, imgLoc, settings) {
 
             for (let rocket of env.rockets) {
                 rocket.update();
-                rocket.draw();
+                rocket.draw(rocketImg);
             }
 
         }
@@ -376,5 +375,3 @@ const fonts = {
         '¥': shapes.cash[4],
     }
 }
-
-
