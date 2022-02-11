@@ -31,5 +31,5 @@ function launch(){
 }
 
 setTimeout(()=>{
-    fireworksEnv.writeMessage("Hey There ♥");
+    fireworksEnv.writeMessage(document.getElementById('launch-text').value);
 }, 500);
