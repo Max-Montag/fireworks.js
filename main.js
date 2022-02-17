@@ -3,7 +3,7 @@ fireworksEnv = fireworks(
     imgLoc = 'rocket-images'
 );
 
-const modes = ['mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'auto', 'random', 'manual', 'hearts', 'smileys', 'cash', 'symbols']
+const modes = ['auto', 'random', 'manual', 'mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'hearts', 'smileys', 'cash', 'symbols']
 
 var s = document.getElementById('mode-select');
 for (let mode of modes) {

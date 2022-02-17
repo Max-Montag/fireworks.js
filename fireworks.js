@@ -21,7 +21,7 @@ function fireworks(wrapperID, imgLoc, settings) {
 
                 this.rockets = [];
 
-                this.frequency = settings.frequency || 0.2; // chance for a new rocket to be born in this frame
+                this.frequency = settings.frequency || 0.1; // chance for a new rocket to be born in this frame
                 this.maxRockets = settings.maxRockets || 10; // only valid for random but not for manual (letter) rockets
                 this.ftl = settings.framesToLive || 40; // frames to live
                 this.sparkSize = settings.sparkSize || 1.5; // size of sparks
@@ -34,8 +34,8 @@ function fireworks(wrapperID, imgLoc, settings) {
                 this.font = settings.font || 'max-sans'; // can be 'max-sans', '♥' is supported
                 this.wordDuration = settings.wordDuration || 1; // time between words
                 this.meanLetterTimeout = settings.meanLetterTimeout || 0.05; // min time between letters in seconds
-                this.letterDisplayVariation = settings.letterDisplayVariation || 0.1;
-                this.letterRandomness = settings.letterRandomness || 0.5; // random factor in the y position of letters in %
+                this.letterDisplayVariation = settings.letterDisplayVariation || 0.3;
+                this.letterRandomness = settings.letterRandomness || 0.02; // random factor in the y position of letters
                 this.shapeChance = settings.shapeChance || 0.5; // chance for shape in mixed shape modes
 
                 /* 
@@ -50,7 +50,7 @@ function fireworks(wrapperID, imgLoc, settings) {
                         - default is 'auto'
                 */
 
-                this.mode = settings.mode || 'mixed hearts';
+                this.mode = settings.mode || 'auto';
 
             }
 
@@ -107,9 +107,12 @@ function fireworks(wrapperID, imgLoc, settings) {
                                 // get letter
                                 let letter = message[i].toUpperCase();
 
+                                // calc some random y-offset for this rocket
+                                let yOffset = ((this.canvas.height * this.letterRandomness / 100) / 2 + p.random(this.canvas.height * this.letterRandomness / 100));
+
                                 // calc accelearation for this rocket
-                                let xAcc = p.round(-message.length / 2 + i);
-                                let yAcc = - ((this.canvas.height - ((this.canvas.height * this.letterRandomness / 100) / 2 + p.random(this.canvas.height * this.letterRandomness / 100))) / (this.canvas.height / 20));
+                                let xAcc = ((-message.length / 2 + i + 0.5) / message.length / 2) * (env.canvas.width / 50);
+                                let yAcc = -((Math.sqrt((this.canvas.height) + 100) + yOffset) * GRAVITY.y * 2); // 
                                 let acc = p.createVector(xAcc, yAcc);
 
                                 // shot from middle position 
@@ -392,4 +395,4 @@ const fonts = {
     }
 }
 
-const rocketImages = ['rocket.png', 'rocket2.png'];
+const rocketImages = ['rocket_0.png', 'rocket_1.png', 'rocket_2.png', 'rocket_3.png'];
