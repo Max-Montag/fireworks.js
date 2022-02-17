@@ -8,10 +8,10 @@
   <div id="fireworks-wrapper"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/max-montag/fireworks.js/fireworks.min.js"></script>
+  <script src="fireworks.js"></script>
 ```
 
-> include rocket.png in your img folder
+> include the rocket-images folder
 
 > include css for overlay-like fireworks (click through)
 ```css
@@ -32,7 +32,7 @@
 ```js
 fireworksEnv = fireworks(
     wrapperID = 'fireworks-wrapper', 
-    imgLoc = '/yourImagefolder/rocket.png', // match img folder!
+    imgLoc = '/yourImagefolder/rocket-images', // TODO match location
     settings = {
         'framesToLive': 90, // after explosion
         'sparkSize': 1.5,

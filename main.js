@@ -1,19 +1,9 @@
 fireworksEnv = fireworks(
     wrapperID = 'fireworks-wrapper', 
-    imgLoc = 'rocket.png',
-    settings = {
-        'framesToLive': 90,
-        'sparkSize': 1.5,
-        'sparkSpeed': 1.5,
-        'minSparkAmount': 20,
-        'maxSparkAmount': 100,
-        'mode': 'auto',
-        'wordDuration': 1,
-
-    }
+    imgLoc = 'rocket-images'
 );
 
-const modes = ['auto', 'random', 'manual', 'mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'hearts', 'smileys', 'cash', 'symbols']
+const modes = ['mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'auto', 'random', 'manual', 'hearts', 'smileys', 'cash', 'symbols']
 
 var s = document.getElementById('mode-select');
 for (let mode of modes) {
@@ -27,9 +17,9 @@ function changeMode(){
 }
 
 function launch(){
-    fireworksEnv.writeMessage(document.getElementById('launch-text').value);
+    fireworksEnv.launchMessage(document.getElementById('launch-text').value);
 }
 
 setTimeout(()=>{
-    fireworksEnv.writeMessage(document.getElementById('launch-text').value);
+    launch();
 }, 500);

@@ -11,28 +11,31 @@ function fireworks(wrapperID, imgLoc, settings) {
         const SPARK_GRAVITY = p.createVector(0, 0.05);
 
         class FireworksEnv {
-            constructor(wrapperID, imgLoc, settings) {
+            constructor(wrapperID, imgLoc, settings = {}) {
                 this.wrapperID = wrapperID;
                 this.imgLoc = imgLoc;
+                this.rocketImages = [];
                 this.frameRate = settings.frameRate || 60;
                 this.backgroundColor = settings.backgroundColor || 'rgba(0%,0%,0%, 0)'; // 0 <= backgroundColor < 256
                 this.canvas = null;
 
                 this.rockets = [];
 
-                this.frequency = settings.frequency || 0.05; // chance for a new rocket to be born in this frame
-                this.maxRockets = settings.maxRockets || 15; // max amoutn of rocketsmaxRockets 
-                this.ftl = settings.framesToLive || 90; // frames to live
+                this.frequency = settings.frequency || 0.2; // chance for a new rocket to be born in this frame
+                this.maxRockets = settings.maxRockets || 10; // only valid for random but not for manual (letter) rockets
+                this.ftl = settings.framesToLive || 40; // frames to live
                 this.sparkSize = settings.sparkSize || 1.5; // size of sparks
                 this.sparkSpeed = settings.sparkSpeed || 1.5; // speed of sparks
                 this.minSparkAmount = settings.minSparkAmount || 20; // min amount of sparks per rocket
                 this.maxSparkAmount = settings.maxSparkAmount || 100; // max amount of sparks per rocket
+                this.pointOfExplosion = settings.pointOfExplosion || 2;
                 this.minLaunchAcc = settings.minLaunchAcc || 16; // min accelaration at launch
                 this.maxLaunchAcc = settings.maxLaunchAcc || 24; // max accelaration at launch
                 this.font = settings.font || 'max-sans'; // can be 'max-sans', '♥' is supported
                 this.wordDuration = settings.wordDuration || 1; // time between words
-                this.minLetterTimeout = settings.minLetterTimeout || 250; // min time between letters
-                this.maxLetterTimeout = settings.maxLetterTimeout || 300; // min time between letters
+                this.meanLetterTimeout = settings.meanLetterTimeout || 0.05; // min time between letters in seconds
+                this.letterDisplayVariation = settings.letterDisplayVariation || 0.1;
+                this.letterRandomness = settings.letterRandomness || 0.5; // random factor in the y position of letters in %
                 this.shapeChance = settings.shapeChance || 0.5; // chance for shape in mixed shape modes
 
                 /* 
@@ -44,10 +47,10 @@ function fireworks(wrapperID, imgLoc, settings) {
                         - 'smileys'
                         - 'cash
                         - 'mixed *' -> * can be any shape like 'hearts', 'smileys' or 'cash'
-                        - default ist 'auto'
+                        - default is 'auto'
                 */
 
-                this.mode = settings.mode || 'mixed';
+                this.mode = settings.mode || 'mixed hearts';
 
             }
 
@@ -61,71 +64,79 @@ function fireworks(wrapperID, imgLoc, settings) {
                 p.resizeCanvas(document.getElementById(this.wrapperID).clientWidth, document.getElementById(this.wrapperID).clientHeight);
             }
 
-            launchRandomRocket(payLoad = null) { // will be displayed at a random positions
-                let rocket = new Rocket(
-                    p.createVector(p.random(this.canvas.width), this.canvas.height + 100),
-                    p.createVector(p.random(2) - 1, -((this.minLaunchAcc + p.random(this.maxLaunchAcc - this.minLaunchAcc) * this.canvas.height / 700))),
-                    payLoad
-                );
+            launchRocket(pos, acc, payload = null){
+                let rocket = new Rocket(pos, acc, payload);
                 this.rockets.push(rocket);
-
-                // pop one rocket, if rockets > maxRockets
-                if (this.rockets.length >= this.maxRockets)
-                    this.rockets.splice(0, this.rockets.length - this.maxRockets);
             }
 
-            launchLetterRocket(letter, acc, color = null) {
-                if (fonts[env.font][letter]) {
-                    let rocket = new Rocket(p.createVector(this.canvas.width / 2, this.canvas.height + 50), acc, fonts[env.font][letter]);
-                    this.rockets.push(rocket);
-                }
+            launchRandomRocket(payLoad = null) { // will be displayed at a random positions
+                let randomPos = p.createVector(p.random(this.canvas.width), this.canvas.height + 100);
+                let randomAcc = p.createVector(p.random(2) - 1, -((this.minLaunchAcc + p.random(this.maxLaunchAcc - this.minLaunchAcc) * this.canvas.height / 700)));
+                this.launchRocket(randomPos, randomAcc, payLoad);
             }
 
-            writeWord(word, cb = noop) {
+            // accepts a string oder an array of strings
+            launchMessage(message, cb = noop) {
 
-                for (let i = 0; i < word.length; i++) {
-                    setTimeout(() => {
+                if(typeof message == "string"){
+                    if(message.includes(" ")){
+                        
+                        // split message string into array of words
+                        message = message.split(/\s+/);
+                    }else{
 
-                        // randomly send some random rockets
-                        if (word.length <= 5 && this.mode == 'manual') { // performance!
-                            let randInt = p.random(word.length); // longer words -> less random rockets
-                            if (randInt < 2)
-                                this.launchRandomRocket();
+                        // one word to print
+                        let wordDisplayTime = this.meanLetterTimeout  * message.length;
+                        let letterDisplayTime = 0;
+
+                        setTimeout(()=>{
+                            cb();
+                        }, wordDisplayTime * 1000);
+
+                        for(let i = 0; i < message.length; i++){
+
+                            // calculate timeout for next letter
+                            let variation = - this.letterDisplayVariation / 2 + p.random(this.letterDisplayVariation);
+
+                            let addedTime = (message.length - i > 1) ? this.meanLetterTimeout + variation : wordDisplayTime - letterDisplayTime;
+                            letterDisplayTime += addedTime;
+
+                            // print word
+                            setTimeout(()=>{
+
+                                // get letter
+                                let letter = message[i].toUpperCase();
+
+                                // calc accelearation for this rocket
+                                let xAcc = p.round(-message.length / 2 + i);
+                                let yAcc = - ((this.canvas.height - ((this.canvas.height * this.letterRandomness / 100) / 2 + p.random(this.canvas.height * this.letterRandomness / 100))) / (this.canvas.height / 20));
+                                let acc = p.createVector(xAcc, yAcc);
+
+                                // shot from middle position 
+                                let pos = p.createVector(this.canvas.width / 2, this.canvas.height + 50)
+
+                                if (fonts[env.font][letter]){
+                                    this.launchRocket(pos, acc, fonts[env.font][letter]);
+                                }
+                            }, letterDisplayTime * 1000);
                         }
+                    }
+                }
 
-                        let multiLetter = (word.length == 1) ? 0 : 1; // does this word contain more than one letter?
+                if(Array.isArray(message)){
+                    if(message[0] && message[0].length > 0){
 
-                        // calc accelearation for this rocket
-                        let acc = p.createVector(
-                            ((i / word.length) - 0.4) * (5 + this.canvas.width / 300) * multiLetter,
-                            -10 - ((this.canvas.height - 100 + p.random(200)) / 100)
-                        );
+                        // print next word, once the current word calls back
+                        this.launchMessage(message[0], ()=>{
 
-                        this.launchLetterRocket(word[i].toUpperCase(), acc);
-
-                        if(i >= word.length - 1)
-                            cb()
-
-                    }, (this.minLetterTimeout + p.random(this.maxLetterTimeout - this.minLetterTimeout)) * i);
+                            setTimeout(()=>{
+                                message.shift();
+                                this.launchMessage(message);
+                            }, 1000 * this.wordDuration);
+                        });
+                    }
                 }
             }
-
-            writeMessage(message) {
-                let words = message.split(/\s+/);
-
-                for (let i = 0; i < words.length; i++) {
-
-                    let prevIndex = (i > 0) ? i-1 : 0;
-
-                    setTimeout(() => {
-
-                        // show word
-                        this.writeWord(words[i]);
-
-                    }, (((this.minLetterTimeout + p.random(this.maxLetterTimeout - this.minLetterTimeout)) * words[prevIndex].length * i) +  (i * 1000 * this.wordDuration)));
-                }
-            }
-
         }
 
         // create environment
@@ -137,10 +148,6 @@ function fireworks(wrapperID, imgLoc, settings) {
                 this.vel = vel;
             }
 
-            accelerate(acc) {
-                this.vel.add(acc);
-            }
-
             update() {
                 this.vel.add(SPARK_GRAVITY);
                 this.pos.add(this.vel);
@@ -149,22 +156,24 @@ function fireworks(wrapperID, imgLoc, settings) {
             draw() {
                 p.point(this.pos.x, this.pos.y);
             }
-
         }
 
         class Rocket {
             constructor(pos, acc, sparkVectors = null, color = null) {
                 this.pos = pos;
                 this.vel = acc || p.createVector(0, 0);
-                this.color = color || p.color(p.random(255), p.random(1), 1, 1);
+                this.exploded = false;
                 this.sparks = [];
                 this.sparkVectors = sparkVectors;
-                this.ftl = null; // frames to live (after explosion)
+                this.ftl = env.ftl; // frames to live (after explosion)
+                this.color = color || p.color(p.random(255), p.random(1), 1, 1);
+
+                this.rocketImage = env.rocketImages[p.round(p.random(env.rocketImages.length - 1))];
             }
 
             explode() {
 
-                this.ftl = env.ftl;
+                this.exploded = true;
 
                 // draw letters
                 if (this.sparkVectors) {
@@ -179,7 +188,6 @@ function fireworks(wrapperID, imgLoc, settings) {
                     }
                 } else { // draw random
                     let sparkAmount = env.minSparkAmount + p.random(env.maxSparkAmount - env.minSparkAmount);
-
 
                     for (let i = 0; i < sparkAmount; i++) {
                         this.sparks.push(
@@ -198,41 +206,48 @@ function fireworks(wrapperID, imgLoc, settings) {
                 this.pos.add(this.vel);
 
                 // explode when turning arround
-                if (this.vel.y >= 0 && this.sparks.length < 1) {
+                if (this.exploded == false && this.vel.y >= env.pointOfExplosion)
                     this.explode();
-                }
             }
 
-            draw(rocket) {
+            draw() {
 
-                if (this.sparks.length > 0) {
+                if (!this.exploded) { // draw rockets
+                    
+                    p.image(this.rocketImage, this.pos.x, this.pos.y);
 
-                    // draw sparks
-                    if (this.ftl >= 0) {
+                } else if(this.ftl > 0) { // draw sparks
 
+                    this.ftl = this.ftl - 1; // shorten ttl
+
+                    if(this.ftl == 0){
+                        
+                        this.destroy();
+                        
+                    } else {
                         this.color.setAlpha(this.ftl / env.ftl );
 
                         p.stroke(this.color);
                         p.strokeWeight(env.sparkSize);
-
-                        this.ftl = this.ftl - 1; // shorten ttl
+    
                         for (let spark of this.sparks) {
                             spark.update();
                             spark.draw();
-                        }
-                    } else {
-                        this.sparks = []; // destroy sparks
+                        }  
                     }
-                } else {
-                    p.rotate(p.PI / 180 * this.vel.x * 4);
-                    p.image(rocket, this.pos.x, this.pos.y);
-                    p.rotate(-p.PI / 180 * this.vel.x * 4);
                 }
+            }
+
+            destroy(){
+                env.rockets.splice(this, 1);
             }
         }
 
         p.preload = function () {
-            rocketImg = p.loadImage(env.imgLoc);
+            for(let i = 0; i < rocketImages.length; i++){
+                env.rocketImages[i] = p.loadImage(env.imgLoc + '/' + rocketImages[i]);
+            }
+            
         }
 
 
@@ -255,26 +270,28 @@ function fireworks(wrapperID, imgLoc, settings) {
         p.draw = function () {
 
             if (env.mode != 'manual') {
+
                 // add a new rocket every once in a while
-                let add = (p.random(1) < env.frequency) ? true : false;
+                let add = (p.random(1) < env.frequency && env.rockets.length < env.maxRockets) ? true : false;
 
-                let payload = null;
+                if(add == true){
+                    let payload = null;
 
-                // get payload for shapes
-                if(env.mode.includes('mixed') && p.random(1) < env.shapeChance) {
-                    if(env.mode.includes('mixed ')) {
-                        let shape = env.mode.replaceAll('mixed ', '');
-                        payload = shapes[shape][p.round(p.random(shapes[shape].length - 1))];
+                    // get payload for shapes
+                    if(env.mode.includes('mixed') && p.random(1) < env.shapeChance) {
+                        if(env.mode.includes('mixed ')) {
+                            let shape = env.mode.replaceAll('mixed ', '');
+                            payload = shapes[shape][p.round(p.random(shapes[shape].length - 1))];
+                        }
+                    }else if(Object.keys(shapes).includes(env.mode)) {
+                        payload = shapes[env.mode][p.round(p.random(shapes[env.mode].length - 1))];
+                    }else if(env.mode == 'random') {
+                        let shapeType = Object.keys(shapes)[p.round(p.random(Object.keys(shapes).length - 1))];
+                        payload = shapes[shapeType][p.round(p.random(shapes[shapeType].length - 1))];
                     }
-                }else if(Object.keys(shapes).includes(env.mode)) {
-                    payload = shapes[env.mode][p.round(p.random(shapes[env.mode].length - 1))];
-                }else if(env.mode == 'random') {
-                    let shapeType = Object.keys(shapes)[p.round(p.random(Object.keys(shapes).length - 1))];
-                    payload = shapes[shapeType][p.round(p.random(shapes[shapeType].length - 1))];
-                }
 
-                if (add == true)
                     env.launchRandomRocket(payload);
+                }
             }
 
             p.clear();
@@ -287,9 +304,8 @@ function fireworks(wrapperID, imgLoc, settings) {
 
             for (let rocket of env.rockets) {
                 rocket.update();
-                rocket.draw(rocketImg);
+                rocket.draw();
             }
-
         }
     }, wrapperID); // attach to DOM
 
@@ -375,3 +391,5 @@ const fonts = {
         '¥': shapes.cash[4],
     }
 }
+
+const rocketImages = ['rocket.png', 'rocket2.png'];
