@@ -27,7 +27,7 @@
 }
 ```
 
-> Create an environment
+> create an environment
 
 ```js
 fireworksEnv = fireworks(

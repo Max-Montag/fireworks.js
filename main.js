@@ -16,7 +16,7 @@ function changeMode() {
 
     if(fireworksEnv.mode != 'clock' && mode == 'clock')
         fireworksEnv.clock(true);
-    else if(fireworksEnv.mode == 'clock')
+    else
         fireworksEnv.clock(false);
 
     fireworksEnv.mode = mode;

@@ -175,7 +175,7 @@ function fireworks(wrapperID, imgLoc, settings) {
 
                     }, 1000);
                 } else {
-                    clearIntervall(this.clockIntervall);
+                    clearInterval(this.clockIntervall);
                     this.clockIntervall = null;
                 }
             }
