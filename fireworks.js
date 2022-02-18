@@ -87,7 +87,7 @@ function fireworks(wrapperID, imgLoc, settings) {
 
             launchRandomRocket(payLoad = null) { // will be displayed at a random positions
                 let randomPos = p.createVector(p.random(this.canvas.width), this.canvas.height + 100);
-                let randomAcc = p.createVector(p.random(2) - 1, -((this.minLaunchAcc + p.random(this.maxLaunchAcc - this.minLaunchAcc) * this.canvas.height / 700)));
+                let randomAcc = p.createVector(p.random(2) - 1, -((Math.sqrt((p.random(this.canvas.height * 2)) + 100)) * GRAVITY.y * 2));
                 this.launchRocket(randomPos, randomAcc, payLoad);
             }
 
@@ -127,8 +127,8 @@ function fireworks(wrapperID, imgLoc, settings) {
                                     let yOffset = ((this.canvas.height * this.letterRandomness / 100) / 2 + p.random(this.canvas.height * this.letterRandomness / 100));
 
                                     // calc accelearation for this rocket
-                                    let xAcc = ((-message.length / 2 + i + 0.5) / message.length / 2) * (env.canvas.width / 50);
-                                    let yAcc = -((Math.sqrt((this.canvas.height) + 100) + yOffset) * GRAVITY.y * 2); // 
+                                    let xAcc = ((-message.length / 2 + i + 0.5) / message.length / 2) * (env.canvas.width / Math.sqrt(canvas.height * 2));
+                                    let yAcc = -((Math.sqrt((this.canvas.height) + 100) + yOffset) * GRAVITY.y * 2); 
                                     let acc = p.createVector(xAcc, yAcc);
 
                                     // shoot from middle position 
