@@ -484,4 +484,4 @@ const fonts = {
 }
 
 const rocketImages = ['rocket_0.png', 'rocket_1.png', 'rocket_2.png'];
-const explosionImages = ['explosion_0.png', 'explosion_1.png', 'explosion_2.png'];
+const explosionImages = ['explosion_0.png', 'explosion_1.png', 'explosion_2.png', 'explosion_3.png'];
