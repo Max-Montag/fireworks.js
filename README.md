@@ -41,7 +41,6 @@ fireworksEnv = fireworks(
         'minSparkAmount': 20,
         'maxSparkAmount': 100,
         'sparkVel': 1.6,
-        'sparkLength': 7,
         'letterSparkRandomness': 0.05, // make letter rockets look more natural
         'sparkColorFadeout': 0.05, 
         'pointOfExplosion': 2, // y velocity that triggers explosion

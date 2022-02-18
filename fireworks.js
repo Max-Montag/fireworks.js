@@ -30,7 +30,6 @@ function fireworks(wrapperID, imgLoc, settings) {
                 this.minSparkAmount = settings.minSparkAmount || 20; // min amount of sparks per rocket
                 this.maxSparkAmount = settings.maxSparkAmount || 100; // max amount of sparks per rocket
                 this.sparkVel = settings.sparkVel || 1.6;
-                this.sparkLength = settings.sparkLength || 7;
                 this.flickerIntensity = settings.flickerIntensity || 0.5;
                 this.flickererAmount = settings.flickererAmount || 0.3;
                 this.letterSparkRandomness = settings.letterSparkRandomness || 0.05;
@@ -180,10 +179,7 @@ function fireworks(wrapperID, imgLoc, settings) {
             }
 
             draw() {
-                if (env.sparkLength > 1 && p.frameRate > 30)
-                    p.line(this.pos.x, this.pos.y, this.pos.x + this.vel.x * env.sparkLength, this.pos.y + this.vel.y * env.sparkLength);
-                else
-                    p.point(this.pos.x, this.pos.y);
+                p.point(this.pos.x, this.pos.y);
             }
         }
 
