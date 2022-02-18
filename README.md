@@ -27,7 +27,7 @@
 }
 ```
 
-> Create an environment and start the simulation
+> Create an environment
 
 ```js
 fireworksEnv = fireworks(
@@ -66,15 +66,10 @@ fireworksEnv = fireworks(
         'mode' = 'auto';
     }
 );
+
 ```
 
-> fireworksEnv contains all relevant parameters that can be adjusted at runtime, e. g.
-
-```js
-fireworksEnv.mode = 'manual';
-```
-
-> activate / deactivate (pause) the event loop (deactivated by default)
+> activate (start) / deactivate (pause) the event loop (deactivated by default)
 
 ```js
 fireworksEnv.activate();
@@ -86,6 +81,12 @@ fireworksEnv.deactivate();
 
 ```js
 fireworksEnv.launchMessage('Hello World');
+```
+
+> fireworksEnv contains all relevant parameters that can be adjusted at runtime, e. g.
+
+```js
+fireworksEnv.mode = 'manual';
 ```
 
 ## Demo
