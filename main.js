@@ -1,5 +1,5 @@
 fireworksEnv = fireworks(
-    wrapperID = 'fireworks-wrapper', 
+    wrapperID = 'fireworks-wrapper',
     imgLoc = 'rocket-images'
 );
 
@@ -7,19 +7,21 @@ const modes = ['auto', 'random', 'manual', 'mixed hearts', 'mixed smileys', 'mix
 
 var s = document.getElementById('mode-select');
 for (let mode of modes) {
-    s.options[s.options.length]= new Option(mode, '1');
+    s.options[s.options.length] = new Option(mode, '1');
 }
 
-function changeMode(){
+function changeMode() {
     var select = document.getElementById('mode-select');
     var mode = select.options[select.selectedIndex].text;
     fireworksEnv.mode = mode;
 }
 
-function launch(){
+function launch() {
     fireworksEnv.launchMessage(document.getElementById('launch-text').value);
 }
 
-setTimeout(()=>{
-    launch();
-}, 500);
+// activate event loop
+fireworksEnv.activate();
+
+// launch content of textfield
+launch();

@@ -1,4 +1,4 @@
-#fireworks-wrapper{
+#fireworks-wrapper {
     position: absolute;
     top: 0;
     left: 0;
@@ -9,19 +9,19 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
-body{
+body {
     width: auto;
     height: auto;
     overflow-y: hidden;
 }
 
-.example-content{
+.example-content {
     width: 100%;
     height: 100%;
     background-color: #181829;
 }
 
-.example-input{
+.example-input {
     position: fixed;
     top: 85%;
     left: 2%;
@@ -38,10 +38,10 @@ body{
     background-color: #242323;
 }
 
-#launch-btn{
+#launch-btn {
     top: 92%;
 }
 
-#mode-select{
+#mode-select {
     top: 78%;
 }

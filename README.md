@@ -34,17 +34,26 @@ fireworksEnv = fireworks(
     wrapperID = 'fireworks-wrapper', 
     imgLoc = '/yourImagefolder/rocket-images', // TODO match location
     settings = {
-        'framesToLive': 90, // after explosion
-        'sparkSize': 1.5,
-        'sparkSpeed': 1.5,
+        'frequency': 0.1, // of new rockets to randomly launch
+        'maxRockets': 20,
+        'ftl': 60, // frames to live after explosion
+        'sparkSize': 1,
         'minSparkAmount': 20,
         'maxSparkAmount': 100,
-        'wordDuration': 1, // in seconds
+        'sparkVel': 1.6,
+        'sparkLength': 7,
+        'letterSparkRandomness': 0.05, // make letter rockets look more natural
+        'sparkColorFadeout': 0.05, 
+        'pointOfExplosion': 2, // y velocity that triggers explosion
+        'wordDuration': 1, // time between words (seconds)
+        'meanLetterTimeout': 0.01, // time between letters (seconds)
+        'letterDisplayVariation': 0.03, // random mini timeout between letter rockets
+        'letterRandomness': 0.02 // random y offset for letter rockets
 
         /* 
             mode can be:
                 - 'random'
-                - 'manual'
+                - 'manual'  // don't launch random rockets
                 - 'auto'
                 - 'hearts'
                 - 'smileys'
@@ -54,7 +63,7 @@ fireworksEnv = fireworks(
                 - default is 'auto'
         */
 
-        'mode' = 'random';
+        'mode' = 'auto';
     }
 );
 ```
@@ -62,7 +71,21 @@ fireworksEnv = fireworks(
 > fireworksEnv contains all relevant parameters that can be adjusted at runtime, e. g.
 
 ```js
-fireworksEnv.mode = 'manual'; // do not launch random rockets
+fireworksEnv.mode = 'manual';
+```
+
+> activate / deactivate (pause) the event loop (deactivated by default)
+
+```js
+fireworksEnv.activate();
+
+fireworksEnv.deactivate();
+```
+
+> send a message
+
+```js
+fireworksEnv.launchMessage('Hello World');
 ```
 
 ## Demo
@@ -72,7 +95,6 @@ https://max-montag.github.io/fireworks.js/
 ## Create your own fonts and shapes here
 
 https://editor.p5js.org/Max-Montag/sketches/lZCj6UUaV
-
 
 ## License
 
