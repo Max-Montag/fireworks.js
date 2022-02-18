@@ -36,18 +36,19 @@ fireworksEnv = fireworks(
     settings = {
         'frequency': 0.1, // of new rockets to randomly launch
         'maxRockets': 20,
-        'ftl': 60, // frames to live after explosion
-        'sparkSize': 1,
+        'ftl': 150, // frames to live after explosion
+        'sparkSize': 8,
         'minSparkAmount': 20,
         'maxSparkAmount': 100,
-        'sparkVel': 1.6,
+        'sparkVel': 1.0,
+        'flickerIntensity': 0.8,
         'letterSparkRandomness': 0.05, // make letter rockets look more natural
-        'sparkColorFadeout': 0.05, 
+        'sparkColorFadeout': 0.06, 
         'pointOfExplosion': 2, // y velocity that triggers explosion
         'wordDuration': 1, // time between words (seconds)
-        'meanLetterTimeout': 0.01, // time between letters (seconds)
-        'letterDisplayVariation': 0.03, // random mini timeout between letter rockets
-        'letterRandomness': 0.02 // random y offset for letter rockets
+        'meanLetterTimeout': 0, // time between letters (seconds)
+        'letterDisplayVariation': 0, // random mini timeout between letter rockets
+        'letterRandomness': 0 // random y offset for letter rockets
 
         /* 
             mode can be:
@@ -86,6 +87,13 @@ fireworksEnv.launchMessage('Hello World');
 
 ```js
 fireworksEnv.mode = 'manual';
+```
+> start / pause clock mode
+
+```js
+fireworksEnv.clock(true);
+
+fireworksEnv.clock(false);
 ```
 
 ## Demo

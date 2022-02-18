@@ -10,7 +10,7 @@ function fireworks(wrapperID, imgLoc, settings) {
         p.noLoop(); // deactivated by default
 
         const GRAVITY = p.createVector(0, 0.3);
-        const SPARK_GRAVITY = p.createVector(0, 0.06);
+        const SPARK_GRAVITY = p.createVector(0, 0.02);
 
         class FireworksEnv {
             constructor(wrapperID, imgLoc, settings = {}) {
@@ -25,24 +25,23 @@ function fireworks(wrapperID, imgLoc, settings) {
 
                 this.frequency = settings.frequency || 0.1; // chance for a new rocket to be born in this frame
                 this.maxRockets = settings.maxRockets || 20; // only valid for random but not for manual (letter) rockets
-                this.ftl = settings.ftl || 60; // frames to live
-                this.sparkSize = settings.sparkSize || 1; // size of sparks
+                this.ftl = settings.ftl || 150; // frames to live
+                this.sparkSize = settings.sparkSize || 8; // size of sparks
                 this.minSparkAmount = settings.minSparkAmount || 20; // min amount of sparks per rocket
                 this.maxSparkAmount = settings.maxSparkAmount || 100; // max amount of sparks per rocket
-                this.sparkVel = settings.sparkVel || 1.6;
-                this.flickerIntensity = settings.flickerIntensity || 0.5;
-                this.flickererAmount = settings.flickererAmount || 0.7;
+                this.sparkVel = settings.sparkVel || 1.0;
+                this.flickerIntensity = settings.flickerIntensity || 0.8;
+                this.flickererAmount = settings.flickererAmount || 1; // 1 -> every rocket is a flickerer
                 this.letterSparkRandomness = settings.letterSparkRandomness || 0.05;
-                this.sparkColorFadeout = settings.sparkColorFadeout || 0.05;
+                this.sparkColorFadeout = settings.sparkColorFadeout || 0.06;
                 this.pointOfExplosion = settings.pointOfExplosion || 2;
-                this.minLaunchAcc = settings.minLaunchAcc || 16; // min accelaration at launch
-                this.maxLaunchAcc = settings.maxLaunchAcc || 24; // max accelaration at launch
                 this.font = settings.font || 'max-sans'; // can be 'max-sans', '♥' is supported
                 this.wordDuration = settings.wordDuration || 1; // time between words
-                this.meanLetterTimeout = settings.meanLetterTimeout || 0.01; // min time between letters in seconds
-                this.letterDisplayVariation = settings.letterDisplayVariation || 0.3;
-                this.letterRandomness = settings.letterRandomness || 0.02; // random factor in the y position of letters
+                this.meanLetterTimeout = settings.meanLetterTimeout || 0; // min time between letters in seconds
+                this.letterDisplayVariation = settings.letterDisplayVariation || 0;
+                this.letterRandomness = settings.letterRandomness || 0; // random factor in the y position of letters
                 this.shapeChance = settings.shapeChance || 0.5; // chance for shape in mixed shape modes
+                this.clockIntervall = null;
 
                 /* 
                     mode can be:
@@ -162,6 +161,24 @@ function fireworks(wrapperID, imgLoc, settings) {
                     }, 50);
                 }
             }
+
+            clock(active){
+                if(active){
+                    this.clockIntervall = setInterval(()=>{
+                        let today = new Date();
+                        let hourZero = (today.getHours() < 10) ? '0' : '';
+                        let minuteZero = (today.getMinutes() < 10) ? '0' : '';
+                        let secondZero = (today.getSeconds() < 10) ? '0' : '';
+
+                        var time = hourZero + today.getHours() + ":" + minuteZero + today.getMinutes() + ":" + secondZero + today.getSeconds();
+                        this.launchMessage(time);
+
+                    }, 1000);
+                } else {
+                    clearIntervall(this.clockIntervall);
+                    this.clockIntervall = null;
+                }
+            }
         }
 
         // create environment
@@ -171,6 +188,7 @@ function fireworks(wrapperID, imgLoc, settings) {
             constructor(pos, vel) {
                 this.pos = pos;
                 this.vel = vel;
+                this.size = p.random(Math.sqrt(env.sparkSize));
             }
 
             update() {
@@ -179,6 +197,7 @@ function fireworks(wrapperID, imgLoc, settings) {
             }
 
             draw() {
+                p.strokeWeight(this.size);
                 p.point(this.pos.x, this.pos.y);
             }
         }
@@ -192,7 +211,7 @@ function fireworks(wrapperID, imgLoc, settings) {
                 this.sparks = [];
                 this.sparkVectors = sparkVectors;
                 this.ftl = env.ftl; // frames to live (after explosion)
-                this.color = color || p.color(p.random(255), p.random(1), 1, 1);
+                this.color = color || p.color(p.random(255), 1, 1);
 
                 this.rocketImage = env.rocketImages[p.round(p.random(env.rocketImages.length - 1))];
             }
@@ -254,7 +273,7 @@ function fireworks(wrapperID, imgLoc, settings) {
 
                     } else {
 
-                        if(p.frameRate() > 30 || p.random(1) > 0.5 ){ // below 30 fps everyone becomes a flickerer
+                        if(p.frameRate() > 30 || p.random(1) > env.flickerIntensity){ // below 30 fps every rocket becomes a flickerer
 
                             // decrease opacity; increase brightness
                             this.color.setAlpha(this.ftl / env.ftl);
@@ -263,8 +282,6 @@ function fireworks(wrapperID, imgLoc, settings) {
                             this.color.setGreen(p.green(this.color) + env.sparkColorFadeout * ((255 - p.green(this.color)) * (1 - (this.ftl / env.ftl))));
 
                             p.stroke(this.color);
-                            p.strokeWeight(env.sparkSize);
-                            
 
                             for (let spark of this.sparks) {
                                 spark.update();
@@ -331,6 +348,7 @@ function fireworks(wrapperID, imgLoc, settings) {
                 }
             }
 
+            //if(p.random(1) > 0.)
             p.clear();
 
             // set FrameRate

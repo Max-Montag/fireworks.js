@@ -3,7 +3,7 @@ fireworksEnv = fireworks(
     imgLoc = 'rocket-images'
 );
 
-const modes = ['auto', 'random', 'manual', 'mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'hearts', 'smileys', 'cash', 'symbols']
+const modes = ['auto', 'random', 'manual', 'mixed hearts', 'mixed smileys', 'mixed cash', 'mixed symbols', 'hearts', 'smileys', 'cash', 'symbols', 'clock']
 
 var s = document.getElementById('mode-select');
 for (let mode of modes) {
@@ -13,6 +13,12 @@ for (let mode of modes) {
 function changeMode() {
     var select = document.getElementById('mode-select');
     var mode = select.options[select.selectedIndex].text;
+
+    if(fireworksEnv.mode != 'clock' && mode == 'clock')
+        fireworksEnv.clock(true);
+    else if(fireworksEnv.mode == 'clock')
+        fireworksEnv.clock(false);
+
     fireworksEnv.mode = mode;
 }
 
