@@ -17,6 +17,7 @@ function fireworks(wrapperID, imgLoc, settings) {
                 this.wrapperID = wrapperID;
                 this.imgLoc = imgLoc;
                 this.rocketImages = [];
+                this.explosionImages = [];
                 this.frameRate = settings.frameRate || 60;
                 this.backgroundColor = settings.backgroundColor || 'rgba(0%,0%,0%, 0)'; // 0 <= backgroundColor < 256
                 this.canvas = null;
@@ -214,9 +215,12 @@ function fireworks(wrapperID, imgLoc, settings) {
                 this.color = color || p.color(p.random(255), 1, 1);
 
                 this.rocketImage = env.rocketImages[p.round(p.random(env.rocketImages.length - 1))];
+                this.explosionImage = env.explosionImages[p.round(p.random(env.explosionImages.length - 1))];
             }
 
             explode() {
+
+                p.image(this.explosionImage, this.pos.x, this.pos.y);
 
                 this.exploded = true;
 
@@ -304,6 +308,9 @@ function fireworks(wrapperID, imgLoc, settings) {
             for (let i = 0; i < rocketImages.length; i++) {
                 env.rocketImages[i] = p.loadImage(env.imgLoc + '/' + rocketImages[i]);
             }
+            for (let i = 0; i < explosionImages.length; i++) {
+                env.explosionImages[i] = p.loadImage(env.imgLoc + '/' + explosionImages[i]);
+            }
         }
 
         // run once
@@ -319,6 +326,7 @@ function fireworks(wrapperID, imgLoc, settings) {
             env.setCanvas(canvas);
 
             p.colorMode(p.HSB, 255, 1, 1, 1);
+            p.imageMode(p.CENTER);
         }
 
         // run continous (frameRate)
@@ -476,3 +484,4 @@ const fonts = {
 }
 
 const rocketImages = ['rocket_0.png', 'rocket_1.png', 'rocket_2.png'];
+const explosionImages = ['explosion_0.png', 'explosion_1.png', 'explosion_2.png'];
