@@ -31,7 +31,7 @@ function fireworks(wrapperID, imgLoc, settings) {
                 this.maxSparkAmount = settings.maxSparkAmount || 100; // max amount of sparks per rocket
                 this.sparkVel = settings.sparkVel || 1.6;
                 this.flickerIntensity = settings.flickerIntensity || 0.5;
-                this.flickererAmount = settings.flickererAmount || 0.3;
+                this.flickererAmount = settings.flickererAmount || 0.7;
                 this.letterSparkRandomness = settings.letterSparkRandomness || 0.05;
                 this.sparkColorFadeout = settings.sparkColorFadeout || 0.05;
                 this.pointOfExplosion = settings.pointOfExplosion || 2;
